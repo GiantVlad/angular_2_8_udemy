@@ -1,13 +1,15 @@
 <p>servers component works!</p>
 
 <input type="text" (input)="onChangeName($event)" class="form-control">
-<button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onChangeStatus()">
+<button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()">
   Add Server
 </button>
 <hr>
 <input type="text" [(ngModel)]="serverDescription" class="form-control">
 <p>Server Description {{serverDescription}}</p>
 <hr>
-<p>{{ serverCreationStatus }}</p>
-<app-server></app-server>
-<app-server></app-server>
+<p *ngIf="serverCreated; else noServer">{{ serverCreationStatus }}</p>
+<ng-template #noServer>
+  <p>No Server was created.</p>
+</ng-template>
+<app-server *ngFor="let server of servers"></app-server>
