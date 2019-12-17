@@ -1,0 +1,17 @@
+<form>
+  <div class="row">
+    <div class="col-xs-7 form-group">
+      <label for="server-name">Server Name</label>
+      <input type="text" id="server-name" class="form-control" [(ngModel)]="newServerName" name="newServerName">
+    </div>
+    <div class="col-xs-4 form-group">
+      <label for="server-id">Server Id</label>
+      <input type="number" id="server-id" class="form-control" #serverIdRef>
+    </div>
+    <div class="col-xs-4 form-group">
+      <label for="server-desc">Server Description</label>
+      <input type="text" id="server-desc" class="form-control" #serverDescription>
+    </div>
+  </div>
+  <button class="btn btn-success" type="button" (click)="onServerAdd(serverDescription)">Add</button>
+</form>

@@ -1,2 +1,12 @@
 <p>servers component works!</p>
-<app-server *ngFor="let server of servers" [element]="server"></app-server>
+<app-server-add (srvAdded)="onServerAdded($event)"></app-server-add>
+<hr>
+<app-server *ngFor="let server of servers" [srvElement]="server">
+  <p
+    [ngStyle]="{backgroundColor: getColor()}"
+    [ngClass]="{online: serverStatus === 'online'}"
+  >
+    <strong>{{server.name}}</strong><br/>
+    <em>{{server.description}}</em>
+  </p>
+</app-server>

@@ -8,7 +8,7 @@ import {Component, Input} from '@angular/core';
   `]
 })
 export class ServerComponent {
-  @Input() element: {type: string, id: number, name: string}
+  @Input('srvElement') element: {description: string, id: number, name: string};
   public serverStatus: string;
   constructor() {
     this.serverStatus = Math.random() > 0.5 ? 'online' : 'offline';

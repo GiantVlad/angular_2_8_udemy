@@ -4,6 +4,13 @@
       <h3>I'm root component</h3>
       <hr>
       <app-servers></app-servers>
+      <hr>
+      <app-test-hooks *ngFor="let item of testHooks" [name]="item.name">
+        <p #paragraphElement>Hello from paragraph</p>
+      </app-test-hooks>
+      <button class="btn btn-info" (click)="changeFirstItem()">First Change</button>
+      <button class="btn btn-info" (click)="addItem()">Add Item</button>
+      <button class="btn bg-danger" (click)="destroyItem()">Destroy Item</button>
     </div>
   </div>
 </div>
