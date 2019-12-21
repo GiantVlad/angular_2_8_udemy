@@ -1,32 +1,7 @@
-<div class="row">
-  <div class="col-xs-12">
-    <img src="" alt="">
+<a href="#" class="list-group-item clearfix" (click)="onClickRecipe()">
+  <div class="pull-left">
+    <h3 class="list-group-item-heading">{{recipe.name}}</h3>
+    <p class="list-group-item-text">{{recipe.description}}</p>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h2>Recipe Nme</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="btn-group">
-      <button class="btn btn-primary dropdown-toggle">Manage Recipe<span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#">To Shop list</a></li>
-        <li><a href="#">Edit recipe</a></li>
-        <li><a href="#">Delete recipe</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <p>Description</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <p>Ingredients</p>
-  </div>
-</div>
+  <span class="pull-right"><img [src]="recipe.imagePath" alt="" class="img-responsive" style="max-height: 50px"></span>
+</a>

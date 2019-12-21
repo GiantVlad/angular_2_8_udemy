@@ -1,10 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <app-header></app-header>
-      <app-recipe-root></app-recipe-root>
-      <app-shopping-edit></app-shopping-edit>
-      <app-shopping-list></app-shopping-list>
+      <app-header (selectedRoute)="onSelectRoute($event)"></app-header>
+      <app-recipe-root *ngIf="selectedRoute === 'recipes'"></app-recipe-root>
+      <app-shopping-edit *ngIf="selectedRoute === 'shopping_list'" (newIngredient) = "addIngredient($event)"></app-shopping-edit>
+      <hr>
+      <app-shopping-list *ngIf="selectedRoute === 'shopping_list'" [ingredients] = "ingredients"></app-shopping-list>
     </div>
   </div>
 </div>

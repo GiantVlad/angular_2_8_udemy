@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-xs-12">
-    <img src="" alt="">
+    <img [src]="selectedRecipe.imagePath" alt="selected Recipe" height="200px">
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h2>Recipe Nme</h2>
+    <h2>{{selectedRecipe.name}}</h2>
   </div>
 </div>
 <div class="row">
@@ -22,7 +22,7 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <p>Description</p>
+    <p>{{selectedRecipe.description}}</p>
   </div>
 </div>
 <div class="row">
