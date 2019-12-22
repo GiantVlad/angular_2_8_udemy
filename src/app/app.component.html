@@ -2,8 +2,24 @@
   <div class="row">
     <div class="col-xs-12">
       <h3>I'm root component</h3>
+      <ul>
+        <div *ngFor="let number of [1,2,3,4,5,6,7,8]">
+          <li *appUnless="number % 2">{{number}}</li>
+        </div>
+      </ul>
       <hr>
-      <app-servers></app-servers>
+      <p appStyleDirective>Here my first custom directive</p>
+      <!--<p appHighlight [defaultColor]="'violet'" newColor="red">Here my second directive</p>-->
+      <!-- possible variant -->
+      <p [appHighlight]= "'violet'" newColor="red">Here my second directive</p>
+
+      <!-- NgSwitch -->
+      <div [ngSwitch]="swValue">
+        <p *ngSwitchCase="1">swValue = 1</p>
+        <p *ngSwitchCase="5">swValue = 5</p>
+        <p *ngSwitchCase="10">swValue = 10</p>
+        <p *ngSwitchDefault>swValue = Default</p>
+      </div>
     </div>
   </div>
 </div>
