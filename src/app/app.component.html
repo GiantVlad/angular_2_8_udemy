@@ -1,9 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <h3>I'm root component</h3>
-      <hr>
-      <app-servers></app-servers>
+    <div class="col-md-10 col-md-offset-2">
+      <h4>Count of inactive to active actions: {{countActive}}</h4>
+      <h4>Count of active to inactive actions: {{countInactive}}</h4>
+    </div>
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <app-active-users></app-active-users>
+      <app-inactive-users></app-inactive-users>
     </div>
   </div>
 </div>
