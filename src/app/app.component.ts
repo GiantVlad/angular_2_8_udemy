@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {IngredientModel} from './shared/ingredient.model';
+import {ShoppingService} from './shopping/shopping.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,9 @@ import {IngredientModel} from './shared/ingredient.model';
 export class AppComponent {
   selectedRoute = 'recipes';
   name = 'Resto';
-  ingredients: IngredientModel[] = [new IngredientModel('Scumbria', 23.45)];
+  ingredients: IngredientModel[];
+  constructor(private shoppingService: ShoppingService) { }
   onSelectRoute(eventVal) {
     this.selectedRoute = eventVal;
-  }
-
-  addIngredient(ingredient) {
-    this.ingredients.push(ingredient);
   }
 }
