@@ -2,13 +2,11 @@
   <div class="col-xs-12 col-sm-4">
     <div class="list-group">
       <a
-        [routerLink]="['/servers', server.id]"
+        [routerLink]="['/users', user.id, user.name]"
         routerLinkActive="active"
-        [queryParams]="{'allow-edit': server.id === 2 ? '1' : '0'}"
-        fragment="loading"
         class="list-group-item"
-        *ngFor="let server of servers">
-        {{ server.name }}
+        *ngFor="let user of users">
+        {{ user.name }}
       </a>
     </div>
   </div>
@@ -16,4 +14,5 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
 
