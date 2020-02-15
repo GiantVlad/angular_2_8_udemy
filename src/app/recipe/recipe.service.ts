@@ -8,6 +8,7 @@ export class RecipeService {
   recipeSelected = new EventEmitter<RecipeModel>();
   private recipes: RecipeModel[] = [
     new RecipeModel(
+      1,
       'Fish',
       'Awesome fish',
       'https://www.eatwell.co.nz/images/recipes/22062015BiteBakedWholeFish.jpg',
@@ -18,6 +19,7 @@ export class RecipeService {
       ]
     ),
     new RecipeModel(
+      2,
       'Gamburger',
       'Big Gamburger',
       'https://media-cdn.tripadvisor.com/media/photo-s/0f/e1/fb/6f/gamburger.jpg',
@@ -33,7 +35,9 @@ export class RecipeService {
   getRecipies() {
     return this.recipes.slice();
   }
-
+  getRecipe(id: number) {
+    return this.recipes.slice().find(el => el.id === id);
+  }
   addIngredientToShoppingList(ingredients: IngredientModel[]) {
     this.shoppingService.addIngredients(ingredients);
   }

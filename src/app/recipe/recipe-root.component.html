@@ -2,12 +2,8 @@
   <div class="col-xs-5">
    <app-recipe-list></app-recipe-list>
   </div>
-  <div class="col-xs-7">
-    <app-recipe-detail *ngIf="selectedRecipe; else initialTpl" [selectedRecipe]="selectedRecipe">
 
-    </app-recipe-detail>
-    <ng-template #initialTpl>
-      <p>Pls select recipe!</p>
-    </ng-template>
+  <div class="col-xs-7">
+    <router-outlet></router-outlet>
   </div>
 </div>

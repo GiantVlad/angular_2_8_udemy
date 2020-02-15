@@ -8,11 +8,6 @@ import {ShoppingService} from './shopping/shopping.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  selectedRoute = 'recipes';
   name = 'Resto';
-  ingredients: IngredientModel[];
-  constructor(private shoppingService: ShoppingService) { }
-  onSelectRoute(eventVal) {
-    this.selectedRoute = eventVal;
-  }
+  constructor() { }
 }
