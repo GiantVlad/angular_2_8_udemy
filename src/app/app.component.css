@@ -1,3 +1,9 @@
-.help-block {
-  color: #a94442;
+.container {
+  margin-top: 30px;
+}
+span.has-error {
+  color: brown;
+}
+.btn-hobby {
+  margin-bottom: 10px;
 }
