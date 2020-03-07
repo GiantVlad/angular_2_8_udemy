@@ -1,54 +1,46 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="singupForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="userData">
-          <div class="form-group" [ngClass]="{'has-error': isFieldInvalid('userData.username')}">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              formControlName="username"
-              class="form-control">
-            <span *ngIf="isFieldInvalid('userData.username')" class="has-error">
-              <span *ngIf="singupForm.get('userData.username').errors['required']">Username is required</span>
-              <span *ngIf="singupForm.get('userData.username').errors['invalidName']">Invalid Username</span>
-            </span>
-          </div>
-
-          <div class="form-group" [ngClass]="{'has-error': isFieldInvalid('userData.email')}">
-            <label for="email">email</label>
-            <input
-              type="text"
-              id="email"
-              formControlName="email"
-              class="form-control">
-            <span *ngIf="isFieldInvalid('userData.email')" class="has-error">
-              <span *ngIf="singupForm.get('userData.email').errors['required']">Email is required</span>
-              <span *ngIf="singupForm.get('userData.email').errors['email']">Email should be an real email</span>
-              <span *ngIf="singupForm.get('userData.email').errors['invalidEmail']">Forbidden email</span>
-            </span>
-          </div>
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group" [ngClass]="{'has-error': isFieldInvalid('name')}">
+          <label for="name">Project name</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+          <span *ngIf="isFieldInvalid('name')" class="has-error">
+              <span *ngIf="projectForm.get('name').errors['required']">Name is required</span>
+              <span *ngIf="projectForm.get('name').errors['invalidName']">Invalid Username</span>
+          </span>
         </div>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
-          </label>
+        <div class="form-group" [ngClass]="{'has-error': isFieldInvalid('email')}">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <span *ngIf="isFieldInvalid('email')" class="has-error">
+            <span *ngIf="projectForm.get('email').errors['required']">Email is required</span>
+            <span *ngIf="projectForm.get('email').errors['email']">Email must be a real email</span>
+          </span>
         </div>
-
-        <div formArrayName="hobbies">
-          <h3>Your hobby</h3>
-          <button type="button" class="btn btn-default btn-hobby" (click)="onAddHobby()">Add hobby</button>
-          <div class="form-group" *ngFor="let hobby of getControls(); let i = index">
-            <input type="text" [formControlName]="i" class="form-control">
-          </div>
+        <div class="form-group">
+          <label for="status">Project Status</label>
+          <select class="form-control" id="status" formControlName="projectStatus">
+            <option *ngFor="let status of projectStatuses">
+              {{status}}
+            </option>
+          </select>
         </div>
-        <button class="btn btn-primary" type="submit" [disabled]="invalidSingupForm">Submit</button>
-
+        <button type="submit" class="btn btn-primary" [disabled]="invalidForm">Submit</button>
       </form>
+      <!--
+          Create a Form with the following Controls and Validators
+          1) Project Name (should not be empty)
+          2) Mail (should not be a empty and a valid email)
+          3) Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+          4) Submit Button
+
+          Add your own Validator which doesn't allow "Test" as a Project Name
+
+          Also implement that Validator as an async Validator (replace the other one)
+
+          Upon submitting the form, simply print the value to the console
+      -->
     </div>
   </div>
 </div>
