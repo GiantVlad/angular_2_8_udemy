@@ -1,4 +1,62 @@
-<p *ngIf="isEdit; else isCreate">recipe edit works!</p>
-<ng-template #isCreate>
-  <p>recipe create works!</p>
-</ng-template>
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <button class="btn btn-success" type="submit" [disabled]="recipeForm.invalid">Save</button>
+          <button class="btn btn-danger" type="button" (click)="redirectBack()">Cancel</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group" [ngClass]="{'has-error': recipeForm.get('name').invalid && recipeForm.get('name').touched}">
+            <label for="name">Name</label>
+            <input formControlName="name" id="name" class="form-control" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group" [ngClass]="{'has-error': recipeForm.get('imagePath').invalid && recipeForm.get('imagePath').touched}">
+            <label for="img">Image</label>
+            <input formControlName="imagePath" id="img" class="form-control" type="text" #imagePath>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <img [src]="imagePath.value" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group" [ngClass]="{'has-error': recipeForm.get('description').invalid && recipeForm.get('description').touched}">
+            <label for="description">Description</label>
+            <textarea formControlName="description" id="description" class="form-control" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-xs-12" formArrayName="ingredients">
+          <div class="row" *ngFor="let ingredientCntr of controls; let i=index" [formGroupName]="i" [ngClass]="{'margin-top': i > 0}">
+            <div class="col-xs-8" [ngClass]="{'has-error': ingredientCntr.get('name').invalid && ingredientCntr.get('name').touched}">
+              <input formControlName="name" id="ingredientName" class="form-control" type="text">
+            </div>
+            <div class="col-xs-2" [ngClass]="{'has-error': ingredientCntr.get('amount').invalid && ingredientCntr.get('amount').touched}">
+              <input formControlName="amount" id="ingredientAmount" class="form-control" type="number">
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-sm btn-danger" type="button" (click)="onDeleteIngredient(i)">X</button>
+            </div>
+          </div>
+          <div class="row" class="margin-top">
+            <div class="col-xs-8">
+              <button type="button" class="btn btn-success" (click)="onAddIngredient()"> Add Ingredient</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

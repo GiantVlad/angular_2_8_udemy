@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {RecipeModel} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -13,8 +13,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: RecipeModel;
   paramsSubscription: Subscription;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
-    console.log(this.route.snapshot.params)
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute,
+              private router: Router,
+              ) {
     this.recipe = this.recipeService.getRecipe(+this.route.snapshot.params.id);
   }
 
@@ -28,6 +30,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipe = this.recipeService.getRecipe(+params.id);
       }
     );
+  }
+
+  onDeleteRecipe(): Promise<boolean> {
+    this.recipeService.delete(+this.recipe.id);
+    return this.router.navigate(['recipes']);
   }
 
   ngOnDestroy() {
