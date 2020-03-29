@@ -1,21 +1,24 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <input type="text" [(ngModel)]="filterString">
-      <hr>
-      <h3>Server Status {{appStatus | async}}</h3>
+      <div class="form-group">
+        <label for="sort">Sort by:</label>
+        <select id="sort" class="form-control" [(ngModel)]="sortByColumn">
+          <option *ngFor="let column of columns">{{ column }}</option>
+        </select>
+      </div>
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | filter:filterString:'instanceType'"
+          *ngFor="let server of servers | sortBy:sortByColumn"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">
             {{ server.status }}
           </span>
           <strong>
-            {{ server.name | shorter: 7 }}</strong> |
-            {{ server.instanceType | uppercase }} |
+            {{ server.name }}</strong> |
+            {{ server.instanceType | uppercase | reverse}} |
             {{ server.started | date:'fullDate' }}
         </li>
       </ul>
