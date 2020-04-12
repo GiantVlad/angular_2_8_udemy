@@ -1,24 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {ServerComponent} from './server/server.component';
-import { ServersComponent } from './servers/servers.component';
+import {AuthInterseprorService} from './auth-intersepror.service';
+import {LogginInterceptorService} from './loggin-interceptor.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ServerComponent,
-    ServersComponent,
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterseprorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LogginInterceptorService,
+      multi: true
+    }
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-  ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
