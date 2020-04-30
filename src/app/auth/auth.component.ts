@@ -61,4 +61,8 @@ export class AuthComponent implements OnInit {
   isFieldInvalid(fieldName: string): boolean {
     return this.loginForm.get(fieldName).invalid && this.loginForm.get(fieldName).touched;
   }
+
+  onHandleClose(): void {
+    this.errorMessage = null;
+  }
 }

@@ -20,6 +20,7 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
 import { AuthComponent } from './auth/auth.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import {AuthInterceptor} from './auth/auth.interceptor';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {AuthInterceptor} from './auth/auth.interceptor';
     RecipeEditComponent,
     AuthComponent,
     LoadingComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
