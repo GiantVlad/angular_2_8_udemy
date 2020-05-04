@@ -89,7 +89,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  private redirectBack(): Promise<boolean> {
+  redirectBack(): Promise<boolean> {
     const to = this.isEdit ? ['../../', this.recipeId] : ['../'];
     return this.router.navigate(to, {relativeTo: this.route});
   }

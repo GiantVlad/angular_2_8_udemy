@@ -11,7 +11,7 @@ export class DropdownDirective implements OnInit {
     this.addClass = false;
   }
 
-  @HostListener('click') onClick(eventData: Element) {
+  @HostListener('click') onClick() {
     this.addClass = !this.addClass;
   }
 
