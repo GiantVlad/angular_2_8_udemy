@@ -1,4 +1,6 @@
 export class IngredientModel {
-  public selected = false;
-  constructor(public name: string, public amount: number) {}
+  constructor(
+    public name: string,
+    public amount: number,
+    public selected: boolean = false) {}
 }

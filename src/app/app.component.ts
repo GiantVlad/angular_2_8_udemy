@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {IngredientModel} from './shared/ingredient.model';
-import {ShoppingService} from './shopping/shopping.service';
 import {AuthService} from './auth/auth.service';
 
 @Component({
