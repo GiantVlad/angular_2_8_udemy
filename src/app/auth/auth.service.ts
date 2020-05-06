@@ -5,6 +5,9 @@ import {catchError, tap} from 'rxjs/operators';
 import {UserModel} from './user.model';
 import {Router} from '@angular/router';
 import { environment } from '../../environments/environment'
+import {Store} from "@ngrx/store";
+import * as fromApp from '../store/app.reducer'
+import * as AuthActions from './store/auth.action'
 
 export interface AuthResponse  {
   idToken:	string;
@@ -22,10 +25,11 @@ export class AuthService {
   readonly apiKey = environment.firebaseAPIKey;
   private errorMessage: string;
   private tokenExpirationTimer: any;
-  public user = new BehaviorSubject<UserModel>(null);
+  // public user = new BehaviorSubject<UserModel>(null);
   constructor(
     private http: HttpClient,
     private router: Router,
+    private store: Store<fromApp.AppState>,
   ) {
     this.errorMessage = 'An unknown error occurred.';
   }
@@ -46,7 +50,14 @@ export class AuthService {
       userData._token,
       new Date(userData.tokenExpiration)
     );
-    this.user.next(loggedUser);
+    this.store.dispatch( new AuthActions.Login(
+      {
+        email: userData.email,
+        id: userData.id,
+        token: userData._token,
+        tokenExpiration: new Date(userData.tokenExpiration),
+      }
+    ));
     const expiresDuration = new Date(userData.tokenExpiration).getTime() - new Date().getTime();
     this.autoLogout(expiresDuration);
   }
@@ -76,7 +87,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.user.next(null);
+    this.store.dispatch( new AuthActions.Logout() );
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
@@ -99,7 +110,14 @@ export class AuthService {
       token,
       expDate
     );
-    this.user.next(userModel);
+    this.store.dispatch( new AuthActions.Login(
+      {
+        email,
+        id: userId,
+        token,
+        tokenExpiration: expDate,
+      }
+    ));
     localStorage.setItem('userData', JSON.stringify(userModel));
     this.autoLogout(expiresIn * 1000);
   }
