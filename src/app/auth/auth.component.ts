@@ -1,10 +1,11 @@
 import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthResponse, AuthService} from './auth.service';
-import {Observable, Subscription} from 'rxjs';
-import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 import {AlertComponent} from '../shared/alert/alert.component';
 import {PlaceholderDirective} from '../shared/placeholder/placeholder.directive';
+import {Store} from "@ngrx/store";
+import * as fromApp from '../store/app.reducer'
+import * as AuthActions from './store/auth.action'
 
 @Component({
   selector: 'app-auth',
@@ -16,21 +17,29 @@ export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   loginForm: FormGroup;
   errorMessage: string = null;
-  authSubscription: Observable<AuthResponse>;
+  subscriptions: Subscription[];
+
   @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective;
-  private alertCloseSub: Subscription;
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit() {
+    this.subscriptions = [];
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
+    const storeSub = this.store.select('auth').subscribe(authData => {
+      this.isLoading = authData.loading;
+      this.errorMessage = authData.authError;
+      if (this.errorMessage) {
+        this.showAlert(this.errorMessage);
+      }
+    });
+    this.subscriptions.push(storeSub);
   }
 
   onSwitchMode(): void {
@@ -45,23 +54,20 @@ export class AuthComponent implements OnInit, OnDestroy {
     const password = this.loginForm.value.password;
     this.isLoading = true;
     if (this.isLoginMode) {
-      this.authSubscription = this.authService.login(email, password);
+      this.store.dispatch( new AuthActions.LoginStart(
+        {
+          email,
+          password
+        }
+      ));
     } else {
-      this.authSubscription = this.authService.singUp(email, password);
+      this.store.dispatch( new AuthActions.SignupStart(
+        {
+          email,
+          password
+        }
+      ));
     }
-    this.authSubscription.subscribe(
-      response => {
-        console.log(response);
-        this.isLoading = false;
-        this.loginForm.reset();
-        this.router.navigate(['/recipes']);
-      },
-      error => {
-        console.log(error);
-        this.isLoading = false;
-        // this.errorMessage = error;
-        this.showAlert(error);
-      });
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -69,13 +75,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onHandleClose(): void {
-    this.errorMessage = null;
+    this.store.dispatch(new AuthActions.ClearError());
   }
 
   ngOnDestroy(): void {
-    if (this.alertCloseSub) {
-      this.alertCloseSub.unsubscribe();
-    }
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 
   private showAlert(message: string) {
@@ -84,9 +90,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     hostViewContainerRef.clear();
     const componentRef = hostViewContainerRef.createComponent(alertFactory);
     componentRef.instance.message = message;
-    this.alertCloseSub = componentRef.instance.close.subscribe(() => {
-      this.alertCloseSub.unsubscribe();
+    const alertCloseSub = componentRef.instance.close.subscribe(() => {
       hostViewContainerRef.clear();
     });
+    this.subscriptions.push(alertCloseSub);
   }
 }
