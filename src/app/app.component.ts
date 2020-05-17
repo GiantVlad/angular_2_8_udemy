@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import * as fromApp from './store/app.reducer'
-import * as AuthActions from './auth/store/auth.action'
-import {Store} from "@ngrx/store";
+import {Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import * as fromApp from './store/app.reducer';
+import * as AuthActions from './auth/store/auth.action';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,14 @@ import {Store} from "@ngrx/store";
 })
 export class AppComponent implements OnInit {
   name = 'Resto';
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(
+    private store: Store<fromApp.AppState>,
+    @Inject(PLATFORM_ID) private platformId,
+  ) { }
 
   ngOnInit(): void {
-    this.store.dispatch( new AuthActions.AutoLogin());
+    if ( isPlatformBrowser(this.platformId)) {
+      this.store.dispatch( new AuthActions.AutoLogin());
+    }
   }
 }
