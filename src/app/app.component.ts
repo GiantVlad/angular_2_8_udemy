@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  name = 'Timaty';
+  list = ['Milk', 'Sugar', 'Bread'];
+
+    onAdd(item) {
+      this.list.push(item);
+    }
 }
